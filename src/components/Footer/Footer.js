@@ -1,0 +1,35 @@
+import React from 'react';
+import './Footer';
+
+function Footer() {
+  return (
+    <div className='footer'>
+      <p className='footer__title'>
+        Учебный проект Яндекс.Практикум х BeatFilm.
+      </p>
+      <div className='footer__container'>
+        <p className='footer__text footer_color'>©2023</p>
+        <div className='footer__information'>
+          <a
+            href='https://practicum.yandex.ru/'
+            target='_blank'
+            rel='noreferrer'
+            className='footer__text footer_left'
+          >
+            Яндекс.Практикум
+          </a>
+          <a
+            href='https://github.com/'
+            target='_blank'
+            rel='noreferrer'
+            className='footer__text footer_left'
+          >
+            Github
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Footer;
