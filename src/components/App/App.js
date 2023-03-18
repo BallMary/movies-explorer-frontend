@@ -1,8 +1,7 @@
 import React from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-// import './App';
+import './App';
 import Header from '../Header/Header';
-// import Promo from '../Promo/Promo';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
@@ -23,17 +22,19 @@ function App() {
   return (
     <div className='App'>
       <Header />
-      <Switch>
-        <Route exact path='/' component={Main} />
-        <Route path='/signup' component={Register} />
-        <Route path='/signin' component={Login} />
-        <Route path='/movies' component={Movies} />
-        <Route path='/saved-movies' component={SavedMovies} />
-        <Route path='/profile' component={Profile} />
-        <Route path='*'>
-          <Error />
-        </Route>
-      </Switch>
+      <main>
+        <Switch>
+          <Route exact path='/' component={Main} />
+          <Route path='/signup' component={Register} />
+          <Route path='/signin' component={Login} />
+          <Route path='/movies' component={Movies} />
+          <Route path='/saved-movies' component={SavedMovies} />
+          <Route path='/profile' component={Profile} />
+          <Route path='*'>
+            <Error />
+          </Route>
+        </Switch>
+      </main>
       {viewFooter && <Footer />}
     </div>
   );

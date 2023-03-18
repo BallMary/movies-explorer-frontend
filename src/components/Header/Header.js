@@ -40,7 +40,7 @@ function Header({ loggedIn }) {
           <div
             className={click ? 'header__container active' : 'header__container'}
           >
-            <Link className='header__font' to='/'>
+            <Link className='header__font header__font_hidden' to='/'>
               Главная
             </Link>
             <Link to='/movies' className='header__font'>

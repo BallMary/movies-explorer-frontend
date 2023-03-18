@@ -22,8 +22,6 @@
 }
 
 .about-me__title {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 22px;
   line-height: 27px;
@@ -84,8 +82,6 @@
 }
 
 .about-me__name {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 50px;
   line-height: 58px;
@@ -108,8 +104,6 @@
 }
 
 .about-me__age {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 20px;
@@ -129,8 +123,6 @@
 }
 
 .about-me__text {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -152,8 +144,6 @@
 }
 
 .about-me__github {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;

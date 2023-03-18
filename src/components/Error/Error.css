@@ -5,8 +5,6 @@
 }
 
 .error__404 {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 140px;
   line-height: 169px;
@@ -22,8 +20,6 @@
 }
 
 .error__text {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
@@ -39,8 +35,6 @@
 }
 
 .error__button {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;

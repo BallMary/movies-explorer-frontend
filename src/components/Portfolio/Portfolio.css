@@ -1,6 +1,4 @@
 .portfolio__name {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 20px;
@@ -31,8 +29,6 @@
 }
 
 .portfolio__text {
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 400;
   font-size: 30px;
   line-height: 50px;
@@ -78,4 +74,10 @@
 
 .portfolio__link:last-child {
   border-bottom: none;
+}
+
+.portfolio__list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 }

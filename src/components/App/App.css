@@ -32,3 +32,12 @@
     transform: rotate(360deg);
   }
 }
+
+.App {
+  padding: 0;
+  margin: 0 auto;
+  min-width: 320px;
+  max-width: 1280px;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-style: normal;
+}
