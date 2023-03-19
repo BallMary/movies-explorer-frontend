@@ -3,7 +3,7 @@ import './Techs';
 
 function Techs() {
   return (
-    <section className='techs' id='technology'>
+    <div className='techs' id='technology'>
       <div className='techs__title'>Технологии</div>
       <div className='techs__main'>
         <p className='techs__subtitle'>7 технологий</p>
@@ -21,7 +21,7 @@ function Techs() {
           <p className='techs__technology'>mongoDB</p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

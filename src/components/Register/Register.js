@@ -26,11 +26,11 @@ function Register({ onSubmit }) {
     <div className='auth'>
       <div className='auth__container'>
         <Link to='/'>
-          <div alt='Логотип учебного проекта' className='logo logo_auth'></div>
+          <div className='logo logo_auth'></div>
         </Link>
         <h1 className='auth__welcome'>Добро пожаловать!</h1>
       </div>
-      <section className='auth__form'>
+      <section className='auth__section'>
         <form className='auth__form' onSubmit={handleSubmit}>
           <fieldset className='auth__info'>
             <label className='auth__label'>Имя</label>

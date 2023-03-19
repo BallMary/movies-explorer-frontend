@@ -16,7 +16,7 @@ function Header({ loggedIn }) {
       <Switch>
         <Route exact path='/'>
           <Link to='/'>
-            <div alt='Логотип учебного проекта' className='logo'></div>
+            <div className='logo'></div>
           </Link>
 
           <div className='header__main'>
@@ -35,7 +35,7 @@ function Header({ loggedIn }) {
 
         <Route exact path={['/movies', '/saved-movies', '/profile']}>
           <Link to='/'>
-            <div alt='Логотип учебного проекта' className='logo'></div>
+            <div className='logo'></div>
           </Link>
           <div
             className={click ? 'header__container active' : 'header__container'}

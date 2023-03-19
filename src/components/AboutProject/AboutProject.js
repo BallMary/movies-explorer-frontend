@@ -3,7 +3,7 @@ import './AboutProject';
 
 function AboutProject() {
   return (
-    <section className='about' id='about'>
+    <div className='about' id='about'>
       <div className='about__title'>О проекте</div>
       <div className='about__information'>
         <div className='about__container'>
@@ -26,15 +26,19 @@ function AboutProject() {
 
       <div className='about__grid'>
         <div className='about__one'>
-          <p className='about__text about__text_margin about_black'>1 неделя</p>
-          <p className='about__part about_shift'>Back-end</p>
+          <p className='about__text about__text_margin about__text_black'>
+            1 неделя
+          </p>
+          <p className='about__part'>Back-end</p>
         </div>
         <div className='about__four'>
-          <p className='about__text about__text_margin about_grey'>4 недели</p>
+          <p className='about__text about__text_margin about__text_grey'>
+            4 недели
+          </p>
           <p className='about__part'>Front-end</p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

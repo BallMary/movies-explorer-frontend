@@ -1,13 +1,13 @@
-.auth_indent-container {
+.auth__container_indent {
   margin: 70px 250px 0 0;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
-  .auth_indent-container {
+  .auth__container_indent {
     margin: 56px 0 0 0;
   }
 }
 
-.auth_indent-button {
+.auth__submit-button_indent {
   margin-top: 179px;
 }

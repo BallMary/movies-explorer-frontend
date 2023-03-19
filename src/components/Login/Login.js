@@ -24,13 +24,13 @@ function Register({ onSubmit }) {
   };
   return (
     <div className='auth'>
-      <div className='auth__container auth_indent-container'>
+      <div className='auth__container auth__container_indent'>
         <Link to='/'>
-          <div alt='Логотип учебного проекта' className='logo logo_auth'></div>
+          <div className='logo logo_auth'></div>
         </Link>
         <h1 className='auth__welcome'>Рады видеть!</h1>
       </div>
-      <section className='auth__form'>
+      <section className='auth__section'>
         <form className='auth__form' onSubmit={handleSubmit}>
           <fieldset className='auth__info'>
             <label className='auth__label'>E-mail</label>
@@ -56,7 +56,7 @@ function Register({ onSubmit }) {
             />
           </fieldset>
           <button
-            className='auth__submit-button auth_indent-button'
+            className='auth__submit-button auth__submit-button_indent'
             type='submit'
             // onClick={}
           >
