@@ -45,7 +45,6 @@
 }
 
 .auth__input {
-  font-family: 'Inter', sans-serif;
   width: 396px;
   height: 46px;
   margin: 0;
@@ -138,4 +137,11 @@ fieldset {
     flex-direction: column;
     align-items: center;
   }
+}
+
+.auth__error {
+  color: #ff4062;
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 400;
 }

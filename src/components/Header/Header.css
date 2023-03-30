@@ -196,7 +196,7 @@
   }
 
   .header__container.active {
-    left: 0;
+    left: -200%;
     width: 100%;
   }
 }
@@ -228,7 +228,7 @@
   }
 
   .header__container.active {
-    left: 40%;
+    left: -43%;
     width: 500px;
   }
 
@@ -269,4 +269,8 @@
   display: flex;
   align-items: baseline;
   gap: 30px;
+}
+
+.header__auth_hidden {
+  display: none;
 }

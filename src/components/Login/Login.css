@@ -11,3 +11,7 @@
 .auth__submit-button_indent {
   margin-top: 179px;
 }
+
+.auth__submit-button_disabled {
+  opacity: 0.5;
+}

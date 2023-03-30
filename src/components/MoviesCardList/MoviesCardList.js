@@ -1,13 +1,26 @@
 import './MoviesCardList';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+function MoviesCardList({ putLiked, removeLiked, renderedArrayMovies }) {
+  const storageSavedMovies = JSON.parse(
+    localStorage.getItem('SavedMoviesArray')
+  )?.savedMovies;
+
   return (
     <div className='movies-list'>
-      <MoviesCard />
-      <div className='movies__container'>
-        <button className='movies__button-more'>Ещё</button>
-      </div>
+      {renderedArrayMovies.map((item, index) => (
+        <MoviesCard
+          key={index}
+          data={item}
+          isSaved={
+            !storageSavedMovies?.some((movie) => movie.nameRU === item.nameRU)
+              ? false
+              : true
+          }
+          putLiked={putLiked}
+          removeLiked={removeLiked}
+        />
+      ))}
     </div>
   );
 }
