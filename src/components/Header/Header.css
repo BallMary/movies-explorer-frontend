@@ -196,7 +196,7 @@
   }
 
   .header__container.active {
-    left: -200%;
+    left: 0;
     width: 100%;
   }
 }
@@ -228,7 +228,7 @@
   }
 
   .header__container.active {
-    left: -43%;
+    left: 40%;
     width: 500px;
   }
 
