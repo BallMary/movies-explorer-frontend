@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './Register';
+import { useForm } from 'react-hook-form';
+import { textsOfErrors, regexEmail } from '../../utils/constants';
 
-function Register({ onSubmit }) {
+function Register({ onSubmit, isRequestStatus, loggedIn }) {
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+  } = useForm({
+    mode: 'onTouched',
+  });
+
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -10,18 +20,21 @@ function Register({ onSubmit }) {
   });
 
   const handleChange = (e) => {
-    const { name, email, value } = e.target;
+    const { name, value } = e.target;
     setData({
       ...data,
       [name]: value,
-      [email]: value,
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmitRegister = () => {
     onSubmit(data);
   };
+
+  if (loggedIn || isRequestStatus) {
+    return <Redirect to='/movies' />;
+  }
+
   return (
     <div className='auth'>
       <div className='auth__container'>
@@ -31,41 +44,77 @@ function Register({ onSubmit }) {
         <h1 className='auth__welcome'>Добро пожаловать!</h1>
       </div>
       <section className='auth__section'>
-        <form className='auth__form' onSubmit={handleSubmit}>
+        <form className='auth__form' onSubmit={handleSubmit(onSubmitRegister)}>
           <fieldset className='auth__info'>
             <label className='auth__label'>Имя</label>
             <input
+              {...register('name', {
+                required: textsOfErrors.name.nameTextError,
+                minLength: {
+                  value: 2,
+                  message: textsOfErrors.name.minLengthNameTextError,
+                },
+                maxLength: {
+                  value: 20,
+                  message: textsOfErrors.name.maxLengthNameTextError,
+                },
+                onChange: handleChange,
+              })}
               value={data.name}
-              onChange={handleChange}
               id='name'
               className='auth__input'
               type='text'
               name='name'
-              required
             />
+            <div className='auth__error'>
+              {errors?.name && <p>{errors?.name?.message || 'Error!'}</p>}
+            </div>
             <label className='auth__label'>E-mail</label>
             <input
+              {...register('email', {
+                required: textsOfErrors.email.textEmail,
+                pattern: {
+                  value: regexEmail,
+                  message: textsOfErrors.email.isEmailTextError,
+                },
+                onChange: handleChange,
+              })}
               value={data.email}
-              onChange={handleChange}
               id='email-input'
               className='auth__input'
               type='text'
               name='email'
-              required
             />
+            <div className='auth__error'>
+              {errors?.email && <p>{errors?.email?.message || 'Error!'}</p>}
+            </div>
             <label className='auth__label'>Пароль</label>
             <input
+              {...register('password', {
+                required: textsOfErrors.password.textError,
+                minLength: {
+                  value: 5,
+                  message: textsOfErrors.password.minLengthTextError,
+                },
+                onChange: handleChange,
+              })}
               value={data.password}
-              onChange={handleChange}
               id='password-input'
               className='auth__input auth__input_type_password'
               type='password'
               name='password'
-              minLength={4}
-              required
             />
+            <div className='auth__error'>
+              {errors?.password && (
+                <p>{errors?.password?.message || 'Error!'}</p>
+              )}
+            </div>
           </fieldset>
-          <button className='auth__submit-button' type='submit'>
+          <button
+            className='auth__submit-button'
+            type='submit'
+            disabled={!isValid}
+          >
             Зарегистрироваться
           </button>
           <p className='auth__text'>

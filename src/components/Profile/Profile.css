@@ -127,3 +127,18 @@
   color: #ff4062;
   margin-top: 15px;
 }
+
+.profile__error {
+  color: #ff4062;
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 400;
+}
+
+.profile__message {
+  color: #1fa333;
+  font-weight: 500;
+  font-size: 15px;
+  margin-top: 40px;
+  text-align: center;
+}
