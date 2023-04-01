@@ -2,9 +2,6 @@ const regexEmail =
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
 const textsOfErrors = {
-  search: {
-    searchInput: 'Нужно ввести ключевое слово',
-  },
   name: {
     nameTextError: 'Введите имя',
     minLengthNameTextError: 'Введите имя длиной не менее 2 символов',
@@ -18,6 +15,7 @@ const textsOfErrors = {
     textError: 'Введите пароль',
     minLengthTextError: 'Введите пароль длиной не менее 5 символов',
   },
+  error: 'Неверный E-mail или пароль',
 };
 
 export { textsOfErrors, regexEmail };

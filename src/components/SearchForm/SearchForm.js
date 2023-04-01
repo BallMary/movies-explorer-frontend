@@ -1,29 +1,25 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import './SearchForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { useLocation } from 'react-router-dom';
 
-function SearchForm({ toggleSearchShortMovies, setFilterOn, downloadMovies }) {
-  const [searchFilm, setSearchFilm] = useState('');
-  const [isFormValid, setIsFormValid] = useState(false);
+function SearchForm({ toggleSearchShortMovies, downloadMovies }) {
+  const [searchMovie, setSearchMovies] = useState('');
+  const location = useLocation();
+  const valueInput =
+    location.pathname === '/movies'
+      ? JSON.parse(localStorage.getItem('searchMovie'))?.searchMovie
+      : '';
 
   function handleSearchName(e) {
-    setSearchFilm(e.target.value);
-    if (e.target.validity.valid) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
-    }
+    localStorage.removeItem('searchMovie');
+    setSearchMovies(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    downloadMovies(searchFilm);
+    downloadMovies(searchMovie);
   }
-
-  const toggleFilter = useCallback(
-    (e) => setFilterOn(e.target.checked),
-    [setFilterOn]
-  );
 
   return (
     <div className='search'>
@@ -31,21 +27,15 @@ function SearchForm({ toggleSearchShortMovies, setFilterOn, downloadMovies }) {
         <div className='search__container'>
           <input
             onChange={handleSearchName}
-            value={searchFilm || ''}
+            value={valueInput || searchMovie}
             className='search__input'
             name='film'
             placeholder='Фильм'
             required
           ></input>
-          <button
-            type='submit'
-            className={isFormValid ? 'search__button' : 'search__button'}
-          ></button>
+          <button type='submit' className='search__button'></button>
         </div>
-        <FilterCheckbox
-          onChange={toggleFilter}
-          toggleSearchShortMovies={toggleSearchShortMovies}
-        />
+        <FilterCheckbox toggleSearchShortMovies={toggleSearchShortMovies} />
       </form>
     </div>
   );

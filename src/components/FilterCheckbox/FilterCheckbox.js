@@ -1,9 +1,14 @@
 import './FilterCheckbox';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
-function FilterCheckbox({ toggleSearchShortMovies, value }) {
+function FilterCheckbox({ toggleSearchShortMovies }) {
   const location = useLocation();
   const [onlyShortMovies, setOnlyShortMovies] = useState(false);
+  const toggleView =
+    location.pathname === '/movies'
+      ? JSON.parse(localStorage.getItem('onlyShortMovies')).onlyShortMovies
+      : JSON.parse(localStorage.getItem('onlyShortSavedMovies'))
+          .onlyShortMovies;
 
   function onChange() {
     if (location.pathname === '/movies') {
@@ -29,12 +34,12 @@ function FilterCheckbox({ toggleSearchShortMovies, value }) {
   return (
     <div className='checkbox'>
       <p className='checkbox__text'>Короткометражки</p>
-      <label className='checkbox__label'>
+      <label className={'checkbox__label'}>
         <input
-          className='checkbox__button'
+          className={'checkbox__button'}
           type='checkbox'
-          checked={value}
           onChange={onChange}
+          checked={toggleView}
         />
       </label>
     </div>

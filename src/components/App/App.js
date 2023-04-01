@@ -20,6 +20,7 @@ import auth from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { textsOfErrors } from '../../utils/constants';
 
 function App() {
   const history = useHistory();
@@ -30,17 +31,20 @@ function App() {
     location.pathname === '/saved-movies';
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const [currentUser, setCurrentUser] = useState({ data: {} });
   const [requestStatus, setRequestStatus] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [filterOn, setFilterOn] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [loadingSaved, setLoadingSaved] = useState(false);
   const [wasSearched, setWasSearched] = useState(false);
   const [wasSearchedSaved, setWasSearchedSaved] = useState(false);
   const [renderedArrayMovies, setRenderedArrayMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [renderedArraySavedMovies, setRenderedArraySavedMovies] = useState([]);
+  const [initialArray, setInitialArray] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -50,6 +54,7 @@ function App() {
         .then((res) => {
           if (res) {
             handleLogin();
+            setIsChecking(false);
           }
         })
         .then(() => {
@@ -57,14 +62,27 @@ function App() {
             setCurrentUser(data);
           });
         })
-        .catch((err) => console.log(err))
-        .finally(() => history.push('/movies'));
+        .catch((err) => console.log(err));
+    } else {
+      setIsChecking(false);
     }
   }, [loggedIn, history]);
 
   function handleLogin() {
     setLoggedIn(true);
   }
+
+  useEffect(() => {
+    if (loggedIn) {
+      handleToggleSearchShortMovies();
+    }
+  }, [loggedIn, location]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      handleToggleSearchOnlyShortSavedMovies();
+    }
+  }, [loggedIn, location]);
 
   const handleLoginSubmit = (data) => {
     auth
@@ -74,6 +92,7 @@ function App() {
       })
       .then(() => {
         handleLogin();
+        setDisabled(true);
       })
       .then(() => history.push('/movies'))
       .then(() => {
@@ -86,12 +105,27 @@ function App() {
             onlyShortFilms: false,
           })
         );
+        localStorage.setItem(
+          'onlyShortSavedMovies',
+          JSON.stringify({
+            onlyShortFilms: false,
+          })
+        );
+        localStorage.setItem(
+          'MoviesArray',
+          JSON.stringify({
+            filteredMovies: initialArray,
+          })
+        );
         handleDownloadSavedMovies();
       })
-
       .catch((err) => {
         setRequestStatus(false);
+        setErrorMessage(textsOfErrors.error);
         console.log(err);
+      })
+      .finally(() => {
+        setDisabled(false);
       });
   };
 
@@ -107,6 +141,12 @@ function App() {
       .then((data) => {
         auth.setLoginUser(data.email, data.password);
         localStorage.setItem(
+          'MoviesArray',
+          JSON.stringify({
+            filteredMovies: initialArray,
+          })
+        );
+        localStorage.setItem(
           'SavedMoviesArray',
           JSON.stringify({
             savedMovies: savedMovies,
@@ -118,21 +158,16 @@ function App() {
             onlyShortMovies: false,
           })
         );
+        localStorage.setItem(
+          'onlyShortSavedMovies',
+          JSON.stringify({
+            onlyShortFilms: false,
+          })
+        );
       })
       .catch((err) => {
         console.log(err);
         setRequestStatus(false);
-      });
-  };
-
-  const handleUpdateUser = (name, email) => {
-    return auth
-      .editUserData(name, email)
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -174,13 +209,13 @@ function App() {
   function handleToggleSearchShortMovies() {
     if (JSON.parse(localStorage.getItem('onlyShortMovies')).onlyShortMovies) {
       setRenderedArrayMovies(
-        JSON.parse(localStorage.getItem('MoviesArray')).filteredMovies.filter(
+        JSON.parse(localStorage.getItem('MoviesArray'))?.filteredMovies.filter(
           (item) => item.duration < 40
         )
       );
     } else {
       setRenderedArrayMovies(
-        JSON.parse(localStorage.getItem('MoviesArray')).filteredMovies
+        JSON.parse(localStorage.getItem('MoviesArray'))?.filteredMovies
       );
     }
   }
@@ -205,13 +240,13 @@ function App() {
       JSON.parse(localStorage.getItem('onlyShortSavedMovies')).onlyShortMovies
     ) {
       setRenderedArraySavedMovies(
-        JSON.parse(localStorage.getItem('SavedMoviesArray')).savedMovies.filter(
-          (item) => item.duration < 40
-        )
+        JSON.parse(
+          localStorage.getItem('SavedMoviesArray')
+        )?.savedMovies.filter((item) => item.duration < 40)
       );
     } else {
       setRenderedArraySavedMovies(
-        JSON.parse(localStorage.getItem('SavedMoviesArray')).savedMovies
+        JSON.parse(localStorage.getItem('SavedMoviesArray'))?.savedMovies
       );
     }
   }
@@ -303,6 +338,7 @@ function App() {
     setSavedMovies([]);
     setRenderedArrayMovies([]);
     setRenderedArraySavedMovies([]);
+    setInitialArray([]);
     setWasSearched(false);
     setWasSearchedSaved(false);
     setLoggedIn(false);
@@ -317,7 +353,11 @@ function App() {
           <Switch>
             <Route exact path='/' component={Main} />
             <Route path='/signin'>
-              <Login onSubmit={handleLoginSubmit} />
+              <Login
+                onSubmit={handleLoginSubmit}
+                errorMessage={errorMessage}
+                disabled={disabled}
+              />
             </Route>
             <Route path='/signup'>
               <Register
@@ -331,9 +371,8 @@ function App() {
               path='/movies'
               component={Movies}
               loggedIn={loggedIn}
+              isChecking={isChecking}
               downloadMovies={handleDownloadMovies}
-              filterOn={filterOn}
-              setFilterOn={setFilterOn}
               loading={loading}
               renderedArrayMovies={renderedArrayMovies}
               putLiked={handlePutLiked}
@@ -345,6 +384,7 @@ function App() {
               exact
               path='/saved-movies'
               loggedIn={loggedIn}
+              isChecking={isChecking}
               component={SavedMovies}
               renderedArrayMovies={renderedArraySavedMovies}
               wasSearched={wasSearchedSaved}
@@ -356,10 +396,11 @@ function App() {
             <ProtectedRoute
               exact
               loggedIn={loggedIn}
+              isChecking={isChecking}
               path='/profile'
               component={Profile}
               onLogout={handleLogout}
-              handleUpdateUser={handleUpdateUser}
+              setCurrentUser={setCurrentUser}
             />
             <Route exact path='/'>
               {loggedIn ? <Redirect to='/' /> : <Redirect to='/signin' />}

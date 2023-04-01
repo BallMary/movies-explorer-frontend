@@ -76,10 +76,10 @@ function Header({ loggedIn }) {
             </div>
 
             <div
-              className={click ? 'header__burger_fixed' : 'header__burger'}
+              className={`${click ? 'header__burger_fixed' : 'header__burger'} ${loggedIn ? 'header__burger' : 'header__auth_hidden'}`}
               onClick={handleClick}
             >
-              {click ? <FaTimes size={30} /> : <FaBars size={35} />}
+              {click ? <FaTimes size={30} /> : <FaBars size={30} />}
             </div>
           </Route>
 

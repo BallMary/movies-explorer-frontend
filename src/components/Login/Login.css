@@ -15,3 +15,9 @@
 .auth__submit-button_disabled {
   opacity: 0.5;
 }
+
+.auth__common-error {
+  color: #ff4062;
+  font-size: 15px;
+  line-height: 12px;
+}

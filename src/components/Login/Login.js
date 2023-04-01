@@ -5,10 +5,16 @@ import './Login';
 import { useForm } from 'react-hook-form';
 import { textsOfErrors, regexEmail } from '../../utils/constants';
 
-function Login({ onSubmit, loggedIn, isRequestStatus }) {
+function Login({
+  onSubmit,
+  loggedIn,
+  isRequestStatus,
+  errorMessage,
+  disabled,
+}) {
   const {
     register,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
   } = useForm({
     mode: 'onTouched',
@@ -90,12 +96,12 @@ function Login({ onSubmit, loggedIn, isRequestStatus }) {
           <div className='auth__error'>
             {errors?.form && <p>{errors?.form?.message || 'Error!'}</p>}
           </div>
+          <div className='auth__common-error'>{errorMessage}</div>
           <button
             className={`auth__submit-button auth__submit-button_indent ${
-              !isValid ? 'auth__submit-button_disabled' : ''
+              disabled ? 'auth__submit-button_disabled' : ''
             }`}
             type='submit'
-            disabled={!isValid}
           >
             Войти
           </button>

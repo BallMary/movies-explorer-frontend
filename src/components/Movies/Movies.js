@@ -10,8 +10,6 @@ function Movies({
   putLiked,
   removeLiked,
   setInput,
-  filterOn,
-  setFilterOn,
   loading,
   toggleSearchShortMovies,
   wasSearched,
@@ -23,6 +21,7 @@ function Movies({
 
   useEffect(() => {
     window.addEventListener('resize', resizeThrottler);
+    return () => window.removeEventListener('resize', resizeThrottler);
   });
 
   const resizeThrottler = () => {
@@ -45,10 +44,12 @@ function Movies({
   }
 
   function handleMoreMovies() {
-    if (window.innerWidth < 769) {
-      setNumber((number += 2));
-    } else {
+    if (window.innerWidth >= 1280) {
+      setNumber((number += 4));
+    } else if (window.innerWidth >= 1020) {
       setNumber((number += 3));
+    } else {
+      setNumber((number += 2));
     }
     countedList = renderedArrayMovies.slice(0, number);
   }
@@ -57,16 +58,16 @@ function Movies({
     <div className='movies'>
       <SearchForm
         downloadMovies={downloadMovies}
-        filterOn={filterOn}
-        setFilterOn={setFilterOn}
         setInput={setInput}
         toggleSearchShortMovies={toggleSearchShortMovies}
       />
 
       <Preloader loading={loading} />
+
       {renderedArrayMovies.length === 0 && wasSearched && !loading && (
         <p className='movies__notfound'>Ничего не найдено</p>
       )}
+
       <MoviesCardList
         renderedArrayMovies={countedList}
         putLiked={putLiked}

@@ -34,6 +34,16 @@ function MoviesCard({ data, putLiked, removeLiked, isSaved }) {
     }
   }
 
+  function convertDuration(duration) {
+    if (duration > 60) {
+      let hours, minutes;
+      hours = Math.floor(duration / 60);
+      minutes = duration - hours * 60;
+      return `${hours}ч ${minutes}м`;
+    }
+    return `${duration}м`;
+  }
+
   return (
     <div className='movie'>
       <a
@@ -55,7 +65,7 @@ function MoviesCard({ data, putLiked, removeLiked, isSaved }) {
           <button className={movieButton} type='button' onClick={toggleLiked} />
         </div>
       </div>
-      <p className='movie__duration'>{data.duration}</p>
+      <p className='movie__duration'>{convertDuration(data.duration)}</p>
     </div>
   );
 }

@@ -3,8 +3,10 @@ import './Profile.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useForm } from 'react-hook-form';
 import { textsOfErrors, regexEmail } from '../../utils/constants';
+import auth from '../../utils/MainApi';
 
-function Profile({ onLogout, handleUpdateUser }) {
+function Profile({ onLogout, setCurrentUser }) {
+  const [message, setMessage] = useState('');
   const {
     register,
     formState: { errors, isValid },
@@ -24,6 +26,19 @@ function Profile({ onLogout, handleUpdateUser }) {
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleUpdateUser = (name, email) => {
+    return auth
+      .editUserData(name, email)
+      .then((data) => {
+        setCurrentUser(data);
+        setMessage('Изменения сохранены!');
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage('Что-то пошло не так!');
+      });
   };
 
   const handleSubmitUpdateUser = () => {
@@ -55,8 +70,6 @@ function Profile({ onLogout, handleUpdateUser }) {
             })}
             className='profile__input'
             value={formData.name}
-            // onChange={handleChange}
-            // onBlur={handleBlur}
             name='name'
             id='name'
           />
@@ -83,12 +96,12 @@ function Profile({ onLogout, handleUpdateUser }) {
             name='email'
             id='email'
             value={formData.email}
-            // onChange={handleChange}
           />
         </div>
         <div className='profile__error'>
           {errors?.email && <p>{errors?.email?.message || 'Error!'}</p>}
         </div>
+        <div className='profile__message'>{message}</div>
       </div>
       <div className='profile__container'>
         <button
