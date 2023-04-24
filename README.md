@@ -9,4 +9,8 @@
   * исправить баг при удалении буквы из поиска;
   * доделать валидацию по стилям
 
-Ссылка на макет: https://www.figma.com/file/rAbPyFNSM5ZOyskroEG8Rh/Diploma-(Copy)?node-id=891%3A3857&t=EcBIeuw3x5Xlt1zn-1
+
+[Макет в Figma](https://www.figma.com/file/rAbPyFNSM5ZOyskroEG8Rh/Diploma-(Copy)?node-id=891%3A3857&t=EcBIeuw3x5Xlt1zn-1)
+
+[Сайт на сервере](https://domainname.maryball.nomoredomains.work)
+
